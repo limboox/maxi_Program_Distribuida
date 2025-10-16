@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="card bg-dark bg-opacity-75 border border-3 border-primary shadow-lg rounded-4 text-white">
+          <br class="card-body p-5">
+            <div class="text-center mb-4">
+              <i class="bi bi-stars text-primary" style="font-size: 4rem;"></i>
+              <h2 class="fw-bold mt-2">☕ Limbo Cafes ☕</h2>
+              <p class="text-secondary">Pide Tu Cafe</p>
+            </div>
+            <div class="form-group">
+            <option value="n5">Cafes 5$</option>
+            <option value="n6">Capuchino 7$</option>
+            <option value="n8">Mofi 8$</option>
+<h2>Pide tu Cafe☕</h2>
+
+👸🏻🤴🏻 Nombre: <input id="n1"><br><br>
+
+seleccion:
+    <select id="n2">
+    <option value="5">Cafes 5$  </option>
+    <option value="6">RCapuchino 7$</option>
+    <option value="8">Mofi 8$ </option>
+    </select>
+ <br><br>
+Cantidad: <input id="n3"><br><br>
+
+<button onclick="calcular()">Calcular Total 💸</button>
+
+<script>
+function calcular(){
+   n1 = (document.getElementById("n1").value);
+   n2 = parseInt(document.getElementById("n2").value);
+   n3 = parseInt(document.getElementById("n3").value);
+
+   promedio = (n2 * n3 )
+
+  alert("El Total ES: " + promedio);
+}
+</script>
+                
+</body>
+</html>
