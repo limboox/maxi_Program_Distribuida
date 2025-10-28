@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Maquetacion Bootstrap</title>
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  />
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg-light border-bottom">
+            <div class="container">
+                <a class="navbar-brand fw-semibold" href="#">Mi Academia</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                    aria-controls="mainNav" aria-expanded="false" aria-label="Alternar navegacion">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link activete" aria-current="page" href="#">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#clases">Clases</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+</header>
+
+<main>
+    <section class="bg-light py-5">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-md-6">
+                    <h1 class="display-5 fw-bold mb-3">Aprende con nuestras Clases</h1>
+                    <p class="lead mb-4">
+                        Programacion, diseño y mas. Contenido actualizado y docentes con experiencia
+                    </p>
+                    <a href="#clases" class="btn btn-primary btn-lg">Ver Clases</a>
+                </div>
+                <div class="col-md-6">
+                 <img src="https://fotos.perfil.com/2023/09/08/harvard-1649904.jpg"
+                    alt="Academia" 
+                    class="img-fluid rounded-3 shadow-sm" />
+        </div>
+    </section>
+    
+
+    <section id="Clases" class="py-5">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+            <h2 class="h3 mb-0">Clases destacadas</h2>
+            <a href="#" class="btn btn-outline-secondary btn-sm">Ver todas</a>
+        </div>
+
+        <div class="row g-4">
+            <!-- card 1-->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                 <img src="https://videocursos.co/wp-content/uploads/2022/05/html-y-css.webp" class="card-img-top" alt="Curso HTML y CSS"/>
+                    <div class="card-body d-felx d-flex-columm">
+                        <h3 class="h5 card-title">HTML &amp; CSS desde cero </h3>
+                        <p class="card-text d-flex-grow-1">Maqueta sitios responsive dominado la semantica, el grid y las utilidades modernas.
+                        </p>
+                     <a href="#" class="btn btn-primary mt-2">inscribirme</a>
+                    </div>
+                </div>
+            </div>
+            <!--card 2-->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                 <img src="https://niaxus.com/wp-content/uploads/2025/06/vrchyzq6javascript_1705438000.png" class="card-img-top" alt="Curso JavaScript"/>
+                    <div class="card-body d-felx d-flex-columm">
+                        <h3 class="h5 card-title">JavaScript Practico</h3>
+                        <p class="card-text d-flex-grow-1">
+                            Manipulacion del DOM, fetch API, modulos y buenas practicas para proyectos reales.
+                        </p>
+                        <a href="#" class="btn btn-primary mt-2">inscribirme</a>
+                    </div>
+                </div>       
+            </div>
+            <!--car 3-->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="data:image/jpeg;base64,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" class="card-img-top" alt="Curso Bootstrap"/>
+                    <div class="card-body d-felx d-flex-columm">
+                        <h3 class="h5 card-tittle">bootstrap y Utilidades</h3>
+                        <p class="card-text d-flex-grow-1">
+                            Crea interfaces profesionales rapidamente con el sistema de grillas y componentes.
+                        </p>
+                        <a href="#" class="btn btn-primary mt-2">inscribirme</a>
+                    </div>
+                </div>           
+            </div>
+        </div> 
+        <!--car 4-->
+                    <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWRRen_Kv5D_amw-FAiy8QLaIpDhA_AFGbcA&s" class="card-img-top" alt="Curso Bootstrap"/>
+                    <div class="card-body d-felx d-flex-columm">
+                        <h3 class="h5 card-tittle">Python Practico</h3>
+                        <p class="card-text d-flex-grow-1">
+                            Aprenderemos Python para automatizar tareas, crear aplicaciones web y analizar datos.
+                        </p>
+                        <a href="#" class="btn btn-primary mt-2">inscribirme</a>
+                    </div>
+                </div>           
+            </div>
+        </div> 
+
+
+<!--layout con sidebar-->
+        <div class="row g-4" mt-4>
+            <div class="col-lg-8">
+                <div class="p-4 border rounded-3 h-100">
+                    <h3 class="h5">Priximas fechas</h3>
+                    <ul class="mb-0">
+                        <li>HTML &amp; CSS - 5 de novienbre</li>
+                        <li>JavaScript - 12 de noviembre</li>
+                        <li>Bootstrap - 19 de noviembre</li>
+                    </ul>
+                </div>
+            </div>
+            <aside class="col-lg-4">
+                <div class="p-4 border rounded-3 h-100">
+                    <h3 class="h6 text-uppercase text-muted">Filtros</h3>
+                    <div class="vstack gap-2">
+                        <button class="btn btn-outline-primary btn-sm">Principiante</button>
+                        <button class="btn btn-outline-primary btn-sm">Intermedio</button>
+                        <button class="btn btn-outline-primary btn-sm">Avanzado</button>
+                    </div>
+                </div>
+            </aside>
+            </div>
+        </section>
+<!---contacto-->
+     <section id="Contacto" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="h3 mb-4">Contacto</h2>
+            <form class="row g-3">
+                <div class="col-md-6">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" id="nombre" class="form-control" placeholder="Tu Nombre"/>
+                </div>
+                <div class="col-12">
+                    <label for="correo" class="form-label">correo</label>
+                    <input type="email" id="correo" class="form-control" placeholder="tucorreo@ejemplo.com"/>    
+                </div>
+                <div class="col-12">
+                    <label for="mensaje" class="form-label">Mensaje</label>
+                    <input type="text" id="mensaje" class="form-control" placeholder="¿En que podemos ayudarte?"/>
+                </div>
+                <div class="col-12">
+                <botton class="btn btn-primary">Enviar</botton>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+<!--footer-->
+<footer class="py-4 border-top">
+    <div class="container text-center">
+        <small class="text-muted"> © 2025 Mi Academia. Todos los derechos reservados.</small>
+    </div>
+</footer>
+
+<!--Bootstramp-->
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"
+  ></script>
+</body>
+</html>
