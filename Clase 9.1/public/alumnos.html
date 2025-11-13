@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notas por Asignación</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { color: #007bff; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #007bff; color: white; }
+        input[type="number"] { width: 70px; padding: 5px; border: 1px solid #ccc; border-radius: 4px; text-align: center; }
+        button { border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; }
+        button.guardar { background-color: #28a745; color: white; }
+        button.volver { background-color: #6c757d; color: white; margin-top: 15px; }
+        .alert { padding: 10px; margin-top: 10px; border-radius: 4px; }
+        .alert-error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .alert-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gestión de Notas</h1>
+        <p>Curso Seleccionado: <strong id="nombre-curso"></strong></p>
+        <button class="volver" onclick="window.location.href='dashboard.html'">← Volver a Asignaciones</button>
+
+        <div id="status-message" class="alert" style="display:none;"></div>
+        <div id="alumnos-list"><em>Cargando alumnos...</em></div>
+    </div>
+
+    <script>
+        // Cambia esto si tu servidor Node corre en otro puerto
+        const API_URL = "http://localhost:3000";
+
+        // Obtener parámetros de la URL (ejemplo: ?idAsignacion=1&curso=Matemáticas)
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                idAsignacion: params.get('idAsignacion'),
+                nombreCurso: params.get('curso') ? decodeURIComponent(params.get('curso')) : 'N/A'
+            };
+        }
+
+        // Cargar alumnos desde el backend
+        async function cargarAlumnos(idAsignacion, nombreCurso) {
+            document.getElementById('nombre-curso').textContent = nombreCurso;
+            const alumnosListDiv = document.getElementById('alumnos-list');
+            
+            if (!localStorage.getItem('docenteId')) {
+                alert('⚠️ Sesión expirada. Inicia sesión nuevamente.');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/asignaciones/${idAsignacion}/alumnos`);
+                const data = await response.json();
+
+                if (data.ok) {
+                    const alumnosData = data.alumnos;
+                    if (alumnosData.length === 0) {
+                        alumnosListDiv.innerHTML = "<p>No hay alumnos inscritos en esta sección.</p>";
+                    } else {
+                        renderizarTablaAlumnos(alumnosData);
+                    }
+                } else {
+                    alumnosListDiv.innerHTML = `<p class="alert-error">Error al cargar alumnos: ${data.mensaje}</p>`;
+                }
+            } catch (error) {
+                console.error("Error al obtener alumnos:", error);
+                alumnosListDiv.innerHTML = "<p class='alert-error'>⚠️ Error de conexión al servidor.</p>";
+            }
+        }
+
+        // Renderizar tabla de alumnos con inputs para notas
+        function renderizarTablaAlumnos(alumnosData) {
+            const alumnosListDiv = document.getElementById('alumnos-list');
+            let html = `
+                <p>Ingrese las notas (ej. 0.0 a 20.0):</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Inscripción</th>
+                            <th>Alumno</th>
+                            <th>DNI</th>
+                            <th>Nota (P1)</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            alumnosData.forEach(a => {
+                html += `
+                    <tr>
+                        <td>${a.id_inscripcion}</td>
+                        <td>${a.nombre} ${a.apellido}</td>
+                        <td>${a.dni}</td>
+                        <td>
+                            <input type="number"
+                                   class="nota-input"
+                                   id="nota-${a.id_inscripcion}"
+                                   min="0" max="20"
+                                   step="0.1"
+                                   placeholder="0.0">
+                        </td>
+                        <td>
+                            <button class="guardar" onclick="guardarNota(${a.id_inscripcion})">💾 Guardar</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += `</tbody></table>`;
+            alumnosListDiv.innerHTML = html;
+        }
+
+        // Guardar nota en el backend
+        async function guardarNota(idInscripcion) {
+            const inputId = `nota-${idInscripcion}`;
+            const notaElement = document.getElementById(inputId);
+            const valorNota = parseFloat(notaElement.value);
+            const statusDiv = document.getElementById('status-message');
+
+            if (isNaN(valorNota) || valorNota < 0 || valorNota > 20) {
+                statusDiv.className = 'alert alert-error';
+                statusDiv.textContent = 'Por favor, ingrese un valor válido (0 a 20).';
+                statusDiv.style.display = 'block';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/notas`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        id_inscripcion: idInscripcion,
+                        valor: valorNota
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.ok) {
+                    statusDiv.className = 'alert alert-success';
+                    statusDiv.textContent = `✅ Nota ${valorNota.toFixed(1)} guardada correctamente.`;
+                    notaElement.disabled = true; // Bloquear input tras guardar
+                } else {
+                    statusDiv.className = 'alert alert-error';
+                    statusDiv.textContent = `❌ Error: ${data.mensaje}`;
+                }
+
+            } catch (error) {
+                console.error("Error al guardar nota:", error);
+                statusDiv.className = 'alert alert-error';
+                statusDiv.textContent = '❌ No se pudo conectar con el servidor.';
+            } finally {
+                statusDiv.style.display = 'block';
+                setTimeout(() => statusDiv.style.display = 'none', 3000);
+            }
+        }
+
+        // Cargar datos al iniciar
+        document.addEventListener('DOMContentLoaded', () => {
+            const { idAsignacion, nombreCurso } = getUrlParams();
+
+            if (!idAsignacion) {
+                document.getElementById('alumnos-list').innerHTML = '<p class="alert-error">Error: No se encontró ID de asignación.</p>';
+                document.getElementById('nombre-curso').textContent = 'Error';
+                return;
+            }
+
+            cargarAlumnos(idAsignacion, nombreCurso);
+        });
+    </script>
+</body>
+</html>
